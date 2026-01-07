@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Es Jeruk & Es Markisa Pak Nasir - Beranda</title>
+        
+        <link rel="stylesheet" href="Style.css">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    </head>
+    <body class="page-home">
+
+        <div class="floating-fruits">
+            <img src="Aset/Efek & Nav/jeruk potong.png" class="fruit-item fruit-1" alt="Hiasan">
+            
+            <img src="Aset/Efek & Nav/markisa 2.png" class="fruit-item fruit-2" alt="Hiasan">
+            
+            <img src="Aset/Efek & Nav/slice jeruk.png" class="fruit-item fruit-4" alt="Hiasan">
+            
+            <img src="Aset/Efek & Nav/markisa.png" class="fruit-item fruit-3" alt="Hiasan">
+        </div>
+
+
+
+        <header class ="fixed-top-header">
+            <div id="top-status-bar" class="status-bar-simple">
+                <span id="shop-status-text">
+                    <i class="fas fa-clock"></i> Memuat status...
+                </span>
+            </div>
+
+            <nav class="navbar">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="Aset/Efek & Nav/Logo Opsi Es Markisa.png" alt="Logo Pak Nasir" class="navbar-logo-img">
+                    </a>
+                </div>
+                <ul class="nav-list">
+                    <li><a href="index.html" class="active">Beranda</a></li> 
+                    <li><a href="Menu.html">Menu</a></li>
+                    <li><a href="TentangKami.html">Tentang Kami</a></li>
+                    <li><a href="UntukMitra.html" class="mitra-link">Mitra</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div id="weather-widget" class="weather-widget">
+            <div class="weather-icon" id="weather-icon">🌤️</div>
+            <div class="weather-info">
+                <span id="weather-desc">Memuat cuaca...</span>
+                <p id="weather-recommendation" class="weather-promo">Tunggu sebentar...</p>
+            </div>
+            <button onclick="tutupWeather()" class="weather-close">&times;</button>
+        </div>
+
+        <section class="hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <span class="tagline">Vitamin C-nya Berlimpah, Segarnya Alami!!</span>
+                <h1>Selamat Datang di Website Resmi<br>Es Jeruk & Markisa Pak Nasir</h1>
+                <p>Pelepas dahaga terbaik di sekitar UIN Raden Intan. Mampir sebentar, segarnya seharian!</p>
+                <a href="Menu.html" class="btn-hero">Lihat Menu Segar <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </section>
+
+        <section class="section-padding bg-white">
+            <div class="container text-center">
+                <h2 class="section-heading">Kenapa Harus di Sini?</h2>
+                <p class="section-sub">Bukan sekadar es pinggir jalan biasa. Kami beda.</p>
+                
+                <div class="benefit-grid">
+                    <div class="ben-card">
+                        <div class="icon-box"><i class="fas fa-stopwatch"></i></div>
+                        <h4>Pelayanan Kilat</h4>
+                        <p>Gak pake lama! Kami tahu waktu Anda berharga. Pesan, peras, langsung bungkus.</p>
+                    </div>
+                    <div class="ben-card">
+                        <div class="icon-box"><i class="fas fa-hand-sparkles"></i></div>
+                        <h4>Jaminan Higienis</h4>
+                        <p>Gelas bersih, es kristal terjamin, dan proses peras yang steril. Aman diminum siapa saja.</p>
+                    </div>
+                    <div class="ben-card">
+                        <div class="icon-box"><i class="fas fa-smile-beam"></i></div>
+                        <h4>Ramah & Akrab</h4>
+                        <p>Pak Nasir selalu melayani dengan senyum. Beli es sekalian nambah teman ngobrol.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="favorites-section">
+            <h2 class="section-title">🔥 Paling Laris Minggu Ini</h2>
+            <p class="subtitle">Menu andalan yang selalu jadi rebutan pelanggan</p>
+            
+            <div class="favorites-grid">
+                
+                <div class="fav-card">
+                    <div class="fav-badge">#1 JUARA</div>
+                    <img src="Aset/Menu/Aset markisa series/Markisa original.jpg" alt="Markisa Original" class="fav-img" onerror="this.src='https://via.placeholder.com/300?text=Foto+Markisa'">
+                    <div class="fav-info">
+                        <h3>Markisa Original</h3>
+                        <p class="reason">"Rasanya klasik, asam manisnya pas bikin mata melek!"</p>
+                    </div>
+                </div>
+
+                <div class="fav-card">
+                    <div class="fav-badge">#2 CREAMY</div>
+                    <img src="Aset/Menu/Aset jeruk series/Jeruk susu.jpeg" alt="Jeruk Susu" class="fav-img" onerror="this.src='https://via.placeholder.com/300?text=Foto+Jeruk+Susu'">
+                    <div class="fav-info">
+                        <h3>Jeruk Susu</h3>
+                        <p class="reason">"Kombinasi unik! Segarnya jeruk ketemu lembutnya susu kental manis."</p>
+                    </div>
+                </div>
+
+                <div class="fav-card">
+                    <div class="fav-badge">#3 UNIK</div>
+                    <img src="Aset/Menu/Aset markisa series/Markisa mojito.jpg" alt="Markisa Mojito" class="fav-img" onerror="this.src='https://via.placeholder.com/300?text=Foto+Mojito'">
+                    <div class="fav-info">
+                        <h3>Markisa Mojito</h3>
+                        <p class="reason">"Sensasi soda dan daun mint-nya nendang banget pas cuaca panas."</p>
+                    </div>
+                </div>
+
+                <div class="text-center mt-30">
+                    <a href="menu.html" class="btn-action">Lihat Semua Menu →</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding bg-white">
+            <div class="container">
+                <div class="product-quality-wrapper">
+                    <div class="pq-text">
+                        <h2 class="section-heading text-left">Rahasia Kesegaran Kami</h2>
+                        <p>Apa yang masuk ke dalam tubuh Anda adalah prioritas kami. Ini janji kualitas produk Pak Nasir:</p>
+                        
+                        <ul class="quality-list">
+                            <li>
+                                <span class="q-icon">🍊</span>
+                                <div>
+                                    <strong>100% Buah Asli</strong>
+                                    <small>Tanpa sirup perasa buatan. Murni sari buah jeruk & markisa.</small>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="q-icon">🍬</span>
+                                <div>
+                                    <strong>Gula Asli (Tanpa Pemanis Buatan)</strong>
+                                    <small>Kami anti sakarin! Rasa manis murni dari gula pasir berkualitas.</small>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="q-icon">🧊</span>
+                                <div>
+                                    <strong>Es Kristal Higienis</strong>
+                                    <small>Bukan es balok pecahan. Es kristal tabung yang bersih dan bening.</small>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pq-image">
+                        <img src="Aset/Home/pic.jpg" alt="Kualitas Buah">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding decorated-bg">
+            <div class="container">
+                <div class="reason-box">
+                    <div class="ribbon">⭐ GARANSI RASA ⭐</div>
+                    <h2>"Kenapa Harus Beli Sekarang?"</h2>
+                    <p class="quote">
+                        "Karena cuaca Lampung yang panas butuh penyegar yang <strong>Jujur</strong>. <br>
+                        Di sini, Anda tidak hanya membeli es, Anda membeli <em>mood booster</em> untuk melanjutkan aktivitas. 
+                        Harga kaki lima, kualitas bintang lima."
+                    </p>
+                    <div class="signature">
+                        - Pak Nasir & Tim
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="articles-section">
+            <h2 class="section-title">Tahukah Kamu?</h2>
+            <p class="subtitle">Fakta menarik seputar buah segar yang kami sajikan</p>
+            
+            <div class="articles-grid">
+                <a href="https://www.halodoc.com/artikel/ini-9-manfaat-buah-markisa-bagi-kesehatan-yang-jarang-diketahui" target="_blank" class="article-card">
+                    <div class="article-image">
+                        <img src="Aset/Home/Artikel/markisa artikel 1.jpg" alt="Manfaat Markisa">
+                    </div>
+                    <div class="article-content">
+                        <h3>Manfaat Ajaib Buah Markisa</h3>
+                        <p>Kaya vitamin C, serat, dan antioksidan yang baik untuk pencernaan serta kekebalan tubuh.</p>
+                        <span class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
+                
+                <a href="https://ciputrahospital.com/manfaat-buah-jeruk/" target="_blank" class="article-card">
+                    <div class="article-image">
+                        <img src="Aset/Home/Artikel/Artikel jeruk 2.jpg" alt="Manfaat Jeruk">
+                    </div>
+                    <div class="article-content">
+                        <h3>Kenapa Jeruk Bagus Buat Imun?</h3>
+                        <p>Kandungan Vitamin C tinggi pada jeruk peras murni ampuh cegah flu dan sariawan.</p>
+                        <span class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
+
+                <a href="https://www.picturethisai.com/id/toxic-to-humans/Passiflora_edulis.html" target="_blank" class="article-card">
+                    <div class="article-image">
+                        <img src="Aset/Home/Artikel/Markisa artikel 2.jpg" alt="Manfaat Markisa">
+                    </div>
+                    <div class="article-content">
+                        <h3>Markisa Cocok untuk dikonsumsi keluarga?</h3>
+                        <p>Markisa memiliki kandungan vitamin C dan serat yang tinggi, cocok untuk semua usia.</p>
+                        <span class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
+                
+                <a href="https://somethingiscooking.com/2021/04/19/orange-mojito-mocktail/" target="_blank" class="article-card">
+                    <div class="article-image">
+                        <img src="Aset/Home/Artikel/Orange mojito artikel.jpg" alt="Manfaat Jeruk">
+                    </div>
+                    <div class="article-content">
+                        <h3>Resep Orange Mojito Mocktail</h3>
+                        <p>Tips membuat mojito cocktail dari Jeruk</p>
+                        <span class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
+
+                <a href="https://www.puskesmasdenbar2.denpasarkota.go.id/artikel/manfaat-buah-jeruk-untuk-kesehatan-dan-kecantikan" target="_blank" class="article-card">
+                    <div class="article-image">
+                        <img src="Aset/Home/Artikel/Artikel jeruk 1 (2).jpg" alt="Manfaat Markisa">
+                    </div>
+                    <div class="article-content">
+                        <h3>Manfaat Buah Jeruk untuk Kecantikan</h3>
+                        <p>Jeruk kaya akan vitamin C yang baik untuk kulit dan memperkuat sistem kekebalan tubuh.</p>
+                        <span class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
+                
+                <a href="https://pls.fip.unesa.ac.id/post/es-teh-minuman-favorit-orang-indonesia" target="_blank" class="article-card">
+                    <div class="article-image">
+                        <img src="Aset/Home/Artikel/es teh artikel.jpg" alt="Manfaat Jeruk">
+                    </div>
+                    <div class="article-content">
+                        <h3>Di "Es Jeruk & Markisa" ada Es Teh?, Ada dong!</h3>
+                        <p>Minuman Favorit Orang Indonesia</p>
+                        <span class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
+
+                <a href="https://youngontop.com/5-cara-membuat-jus-buah-markisa-segar-yang-cocok-buat-anak-muda-aktif/" target="_blank" class="article-card">
+                    <div class="article-image">
+                        <img src="Aset/Menu/markisa original.jpg" alt="Manfaat Jeruk">
+                    </div>
+                    <div class="article-content">
+                        <h3>Membuat Jus Markisa Segar</h3>
+                        <p>Tips membuat Jus Buah Markisa Segar yang Cocok Buat Anak Muda Aktif!</p>
+                        <span class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section class="next-actions">
+            <div class="action-container">
+                <h3>Mau Pesan atau Kenalan Dulu?</h3>
+                <div class="action-buttons">
+                    <a href="Menu.html" class="btn-action primary">
+                        <i class="fas fa-utensils"></i> Lihat Menu Lengkap
+                    </a>
+                    <a href="TentangKami.html" class="btn-action secondary">
+                        <i class="fas fa-info-circle"></i> Tentang Usaha
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-container">
+                
+                <div class="footer-section">
+                    <div class="footer-section">
+                        <img src="Aset/Efek & Nav/Logo Opsi Es Markisa.png" alt="Logo Pak Nasir" class="footer-logo-img">
+                        
+                        <p style="margin-top: 15px;">Menyajikan kesegaran jeruk dan markisa asli untuk menemani aktivitasmu sehari-hari.</p>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Link Cepat</h3>
+                    <ul>
+                        <li><a href="index.html">Beranda</a></li>
+                        <li><a href="Menu.html">Menu Minuman</a></li>
+                        <li><a href="TentangKami.html">Tentang Kami</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Hubungi Kami</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Jl. Endro Suratmin slb pkk, Sukarame (Depan SLB PKK), Bandar Lampung</p>
+                    <p><i class="fas fa-phone"></i> +62 895-3325-81483</p>
+                    <p><i class="fas fa-clock"></i> Buka: 09.00 - 17.00 WIB</p>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Es Jeruk & Es Markisa Pak Nasir. Dibuat oleh Kelompok Tiga Aksara.</p>
+            </div>
+        </footer>
+
+        <script>
+            // --- FITUR CUACA PINTAR ---
+            
+            // 1. Konfigurasi (GANTI API KEY INI DENGAN MILIKMU NANTI)
+            // Daftar gratis di openweathermap.org untuk dapat key asli.
+            const API_KEY = "49e613467bd4aa8cbdc0def802cf239c"; // Contoh public key
+            const LAT = "-5.3971"; // Latitude Bandar Lampung
+            const LON = "105.2668"; // Longitude Bandar Lampung
+
+            // 2. Fungsi Ambil Data Cuaca
+            async function getWeatherData() {
+                const url = `https://api.openweathermap.org/data/2.5/weather?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric&lang=id`;
+
+                try {
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    
+                    if (data.cod === 200) {
+                        tampilkanWidget(data);
+                    }
+                } catch (error) {
+                    console.log("Gagal ambil cuaca:", error);
+                }
+            }
+
+            // 3. Fungsi Logika Rekomendasi
+            function tampilkanWidget(data) {
+                const temp = Math.round(data.main.temp); // Suhu
+                const desc = data.weather[0].description; // Keterangan (hujan ringan, cerah, dll)
+                const mainCuaca = data.weather[0].main;   // Tipe utama (Rain, Clear, Clouds)
+                
+                let icon = "🌤️";
+                let pesan = "";
+
+                // LOGIKA REKOMENDASI PRODUK
+                if (mainCuaca === "Rain" || mainCuaca === "Drizzle" || mainCuaca === "Thunderstorm") {
+                    // KONDISI HUJAN
+                    icon = "🌧️";
+                    pesan = "Hujan nih! Jaga imun tubuh dengan Vitamin C dari <b>Jeruk Peras Murni</b>. Pesan via WA, kami antar!";
+                    document.querySelector('.weather-widget').style.borderLeftColor = "#2196F3"; // Ubah aksen jadi biru
+                } else if (temp >= 28) {
+                    // KONDISI PANAS
+                    icon = "🔥";
+                    pesan = `Lampung lagi panas (${temp}°C)! Paling pas dinginin kepala pakai <b>Es Markisa Mojito</b> sekarang.`;
+                    document.querySelector('.weather-widget').style.borderLeftColor = "#ff9800"; // Oranye
+                } else {
+                    // KONDISI MENDUNG / BIASA
+                    icon = "☁️";
+                    pesan = `Cuaca adem (${temp}°C). Temani harimu dengan <b>Es Teh Manis</b> atau <b>Thai Tea</b>.`;
+                }
+
+                // Masukkan ke HTML
+                document.getElementById('weather-icon').innerHTML = icon;
+                document.getElementById('weather-desc').innerText = `Bandar Lampung: ${desc}, ${temp}°C`;
+                document.getElementById('weather-recommendation').innerHTML = pesan;
+
+                // Munculkan Widget
+                document.querySelector('.weather-widget').style.display = 'flex';
+            }
+
+            function tutupWeather() {
+                document.getElementById('weather-widget').style.display = 'none';
+            }
+
+            // Jalankan saat website dibuka
+            window.onload = getWeatherData;
+            
+            /* LOGIKA OPERASIONAL TOKO (Updated) */
+            function updateStatusToko() {
+                const now = new Date();
+                const jam = now.getHours(); 
+                
+                const bar = document.getElementById('top-status-bar');
+                const text = document.getElementById('shop-status-text');
+                
+                // 1. AMBIL STATUS MANUAL DARI MITRA
+                // Value: 'auto' (ikut jam), 'istirahat', 'libur', 'tutup_paksa'
+                const manualStatus = localStorage.getItem('mitra_ops_status') || 'auto';
+
+                let bg = "#2e7d32"; // Hijau
+                let msg = "";
+
+                // 2. LOGIKA PRIORITAS
+                if (manualStatus === 'istirahat') {
+                    bg = "#ff9800"; // Oranye
+                    msg = '<i class="fas fa-coffee"></i> SEDANG ISTIRAHAT SHOLAT / MAKAN (Buka Sebentar Lagi)';
+                } 
+                else if (manualStatus === 'libur') {
+                    bg = "#c62828"; // Merah
+                    msg = '<i class="fas fa-calendar-times"></i> HARI INI TOKO LIBUR';
+                } 
+                else if (manualStatus === 'tutup_paksa') {
+                    bg = "#c62828"; // Merah
+                    msg = '<i class="fas fa-door-closed"></i> MAAF, TOKO SEDANG TUTUP';
+                } 
+                else {
+                    // --- MODE AUTO (IKUT JAM) ---
+                    if (jam >= 9 && jam < 17) {
+                        bg = "#2e7d32"; // Hijau
+                        msg = '<i class="fas fa-door-open"></i> TOKO BUKA (09:00 - 17:00 WIB)';
+                    } else {
+                        bg = "#c62828"; // Merah
+                        msg = '<i class="fas fa-door-closed"></i> TOKO TUTUP (Buka Kembali Jam 09:00)';
+                    }
+                }
+
+                // Render
+                if(bar) bar.style.backgroundColor = bg;
+                if(text) text.innerHTML = msg;
+            }
+
+            window.addEventListener('load', updateStatusToko);
+            window.addEventListener('storage', updateStatusToko);
+        </script>
+
+    </body>
+</html>

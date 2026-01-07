@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboard Mitra - Pak Nasir</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    <body class="bg-gray">
+
+        <div id="login-overlay" class="login-gate">
+            <div class="login-box">
+                <div class="login-logo">
+                    <i class="fas fa-user-lock"></i>
+                </div>
+                <h2>Akses Mitra</h2>
+                <p>Masukkan PIN Keamanan Pak Nasir</p>
+                
+                <input type="password" id="pin-input" placeholder="Masukkan PIN" maxlength="4">
+                <button onclick="cekLogin()" class="btn-login">Buka Dashboard</button>
+                <p id="error-msg" class="error-text"></p>
+                
+                <a href="index.html" class="back-link">← Kembali ke Website</a>
+            </div>
+        </div>
+
+        <div id="dashboard-area" class="dashboard-container" style="display: none;">
+        
+            <header class="dash-header">
+                <div class="dash-welcome">
+                    <h1>Halo, Pak Nasir 👋</h1>
+                    <p>Mari cek performa warung hari ini.</p>
+                </div>
+                <button onclick="logout()" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i> Keluar
+                </button>
+            </header>
+
+            <section class="stats-grid">
+                <div class="dash-card full-width" style="border-left: 5px solid #d32f2f;">
+                    <div class="card-header">
+                        <i class="fas fa-store"></i> Status Operasional Toko
+                    </div>
+                    <div class="ops-control-group">
+                        <label class="radio-box">
+                            <input type="radio" name="ops_status" value="auto" onclick="simpanOps('auto')">
+                            <span>🤖 Otomatis (Ikut Jam)</span>
+                        </label>
+                        <label class="radio-box">
+                            <input type="radio" name="ops_status" value="istirahat" onclick="simpanOps('istirahat')">
+                            <span>☕ Sedang Istirahat</span>
+                        </label>
+                        <label class="radio-box">
+                            <input type="radio" name="ops_status" value="libur" onclick="simpanOps('libur')">
+                            <span>🏖️ Sedang Libur</span>
+                        </label>
+                        <label class="radio-box">
+                            <input type="radio" name="ops_status" value="tutup_paksa" onclick="simpanOps('tutup_paksa')">
+                            <span>⛔ Sudah Tutup</span>
+                        </label>
+                    </div>
+                    <a href="index.html" class="back-link">← Periksa Status</a>
+                </div>
+
+                <div class="dash-card full-width" style="border-left: 5px solid #ff9800;">
+                    <div class="card-header">
+                        <i class="fas fa-boxes"></i> Ketersediaan Menu (Stok)
+                    </div>
+                    
+                    <div class="bulk-actions">
+                        <button onclick="setSeries('Jeruk', false)" class="btn-small red">Habiskan Semua Jeruk</button>
+                        <button onclick="setSeries('Markisa', false)" class="btn-small red">Habiskan Semua Markisa</button>
+                        <button onclick="habiskanTeaChoco(false)" class="btn-small red" style="background-color: #795548;">
+                            Habiskan Tea & Choco
+                        </button>
+                        <button onclick="resetStokSemua()" class="btn-small green">Reset (Semua Ready)</button>
+                    </div>
+                    <hr>
+
+                    <div class="menu-stock-list" id="list-stok-menu">
+                        <p>Memuat daftar menu...</p>
+                    </div>
+
+                    <a href="Menu.html" class="back-link">← Periksa Status</a>
+                </div>
+                
+                
+                <div class="stat-card blue">
+                    <h3>Pendapatan Hari Ini</h3>
+                    <div class="value" id="omset-harian">Rp 0</div>
+                    <small id="tanggal-hari-ini">-</small>
+                </div>
+
+                <div class="stat-card orange">
+                    <h3>Total Bulan Ini</h3>
+                    <div class="value" id="omset-bulanan">Rp 0</div>
+                    <small>Akumulasi Transaksi</small>
+                </div>
+
+                <div class="stat-card purple chart-card">
+                    <div class="chart-header">
+                        <span><i class="fas fa-chart-line"></i> Tren 7 Hari Terakhir</span>
+                        <small id="chart-status">Data Real-time</small>
+                    </div>
+                    
+                    <div class="bar-chart-container" id="chart-container">
+                        <div class="loading-chart">Memuat Data...</div>
+                    </div>
+
+                    <div class="chart-footer">
+                        <div class="legend">
+                            <span class="dot-max"></span> Tertinggi
+                            <span class="dot-curr" style="margin-left:10px;"></span> Hari Ini
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card white full-width target-card">
+                    <div class="progress-header">
+                        <div class="target-title-group">
+                            <h3>Target Bulan Ini</h3>
+                            <button onclick="ubahTarget()" class="btn-edit-target">
+                                <i class="fas fa-pencil-alt"></i> Ubah
+                            </button>
+                        </div>
+                        <span id="angka-target-text" class="target-number">Rp 5.000.000</span>
+                    </div>
+                    
+                    <div class="progress-bar-bg">
+                        <div id="progress-fill" class="progress-fill" style="width: 0%;"></div>
+                    </div>
+                    
+                    <p class="target-info-text" id="info-sisa-target">
+                        Menghitung sisa target...
+                    </p>
+                </div>
+            </section>
+
+            <div class="main-content-grid">
+                
+                <div class="dash-card input-section">
+                    <div class="card-header">
+                        <i class="fas fa-cash-register"></i> Input Pemasukan
+                    </div>
+                    <div class="form-group">
+                        <label>Jenis Pemasukan</label>
+                        <select id="jenis-transaksi">
+                            <option value="Harian">🍊 Penjualan Harian (Eceran)</option>
+                            <option value="Borongan">📦 Pesanan Besar (Acara/Bulk)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Keterangan</label>
+                        <input type="text" id="ket-transaksi" placeholder="Cth: Jualan Siang / Bu Siti">
+                    </div>
+                    <div class="form-group">
+                        <label>Total Nominal (Rp)</label>
+                        <input type="number" id="nominal-transaksi" placeholder="0">
+                    </div>
+                    <button onclick="simpanTransaksi()" class="btn-save">
+                        <i class="fas fa-save"></i> Simpan Data
+                    </button>
+                </div>
+
+                <section class="history-section">
+                    <div class="history-header">
+                        <h3>Riwayat Transaksi</h3>
+                        <div class="history-actions">
+                            <button onclick="downloadCSV()" class="btn-small green"><i class="fas fa-file-excel"></i> Unduh Excel</button>
+                            <button onclick="hapusRiwayat()" class="btn-small red"><i class="fas fa-trash"></i> Reset</button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Tipe</th>
+                                    <th>Keterangan</th>
+                                    <th>Jumlah</th>
+                                    <th style="width: 50px;">Hapus</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabel-body"></tbody>
+                        </table>
+                        <p id="empty-msg" style="text-align:center; padding:20px; color:#999;">Belum ada data transaksi.</p>
+                    </div>
+                </section>
+
+                <div class="dash-card calculator-section" style="border-left: 5px solid #2196f3;">
+                    <div class="card-header">
+                        <i class="fas fa-calculator"></i> Kalkulator HPP Menu Spesial
+                        <p style="margin: 5px 0 0 0; font-size: 12px; color: #666; font-weight: normal;">
+                            Centang bahan tambahan sesuai menu yang ingin dihitung (Misal: Jeruk + Yakult).
+                        </p>
+                    </div>
+
+                    <div class="calc-grid-modular">
+                        
+                        <div class="calc-col base-col">
+                            <h4 style="background: #e3f2fd; color: #1565c0;">1. Bahan Dasar</h4>
+                            
+                            <div class="form-group">
+                                <label>Harga Bahan Utama (per Kg/Pack)</label>
+                                <input type="number" id="hpp-harga-bahan" placeholder="Cth: Harga Jeruk/Teh">
+                            </div>
+                            <div class="form-group">
+                                <label>1 Kg/Pack jadi berapa Cup?</label>
+                                <input type="number" id="hpp-yield" value="4" placeholder="4">
+                            </div>
+                            <hr style="border:0; border-top:1px dashed #ccc; margin:10px 0;">
+                            <div class="form-group">
+                                <label>Harga Gula (per Kg)</label>
+                                <input type="number" id="hpp-harga-gula" placeholder="18000">
+                            </div>
+                            <div class="form-group">
+                                <label>Gram Gula per Cup</label>
+                                <input type="number" id="hpp-gram-gula" value="40">
+                            </div>
+                        </div>
+
+                        <div class="calc-col pack-col">
+                            <h4 style="background: #fff3e0; color: #e65100;">2. Kemasan & Ops</h4>
+                            
+                            <div class="form-group">
+                                <label>Modal Cup Set (Cup+Tutup+Plastik)</label>
+                                <input type="number" id="hpp-packaging" placeholder="800">
+                            </div>
+                            <div class="form-group">
+                                <label>Biaya Ops (Es/Listrik/Air)</label>
+                                <input type="number" id="hpp-ops" placeholder="500" value="500">
+                            </div>
+                            
+                            <div class="form-group" style="margin-top: 20px;">
+                                <label>Target Margin (%)</label>
+                                <div class="range-wrapper">
+                                    <input type="range" id="hpp-margin" min="10" max="100" value="40" oninput="updateMarginLabel(this.value)">
+                                    <span id="margin-display">40%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="calc-col addon-col">
+                            <h4 style="background: #f3e5f5; color: #7b1fa2;">3. Campuran / Topping</h4>
+                            <p style="font-size:11px; color:#666; margin-bottom:10px;">Isi harga modal per porsi, lalu <strong>centang</strong> jika dipakai.</p>
+
+                            <div class="addon-list">
+                                <div class="addon-item">
+                                    <input type="checkbox" id="chk-yakult">
+                                    <label for="chk-yakult">Yakult</label>
+                                    <input type="number" id="cost-yakult" class="addon-cost" placeholder="Rp" value="2000">
+                                </div>
+
+                                <div class="addon-item">
+                                    <input type="checkbox" id="chk-soda">
+                                    <label for="chk-soda">Soda/Sprite</label>
+                                    <input type="number" id="cost-soda" class="addon-cost" placeholder="Rp" value="1500">
+                                </div>
+
+                                <div class="addon-item">
+                                    <input type="checkbox" id="chk-susu">
+                                    <label for="chk-susu">Susu/Krim</label>
+                                    <input type="number" id="cost-susu" class="addon-cost" placeholder="Rp" value="1000">
+                                </div>
+
+                                <div class="addon-item">
+                                    <input type="checkbox" id="chk-dugan">
+                                    <label for="chk-dugan">Dugan (Kelapa)</label>
+                                    <input type="number" id="cost-dugan" class="addon-cost" placeholder="Rp" value="1500">
+                                </div>
+
+                                <div class="addon-item">
+                                    <input type="checkbox" id="chk-buah-potong">
+                                    <label for="chk-buah-potong">Lemon/Leci</label>
+                                    <input type="number" id="cost-buah-potong" class="addon-cost" placeholder="Rp" value="1000">
+                                </div>
+                                
+                                <div class="addon-item">
+                                    <input type="checkbox" id="chk-garnish">
+                                    <label for="chk-garnish">Mint/Selasi/Cincau</label>
+                                    <input type="number" id="cost-garnish" class="addon-cost" placeholder="Rp" value="300">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="hitungHPPModular()" class="btn-calc" style="margin-top: 20px;">
+                        <i class="fas fa-coins"></i> Hitung HPP Menu Ini
+                    </button>
+
+                    <div id="hasil-hpp-pro" class="result-box-pro" style="display:none;">
+                        <div class="result-row">
+                            <span>Modal Dasar (Bahan+Gula+Cup):</span> <strong id="res-base">Rp 0</strong>
+                        </div>
+                        <div class="result-row">
+                            <span>Biaya Campuran (Add-ons):</span> <strong id="res-addon" style="color:#d81b60;">Rp 0</strong>
+                        </div>
+                        <hr>
+                        <div class="result-row main-res">
+                            <span>TOTAL MODAL (HPP):</span> <strong id="res-hpp-total" class="red-text">Rp 0</strong>
+                        </div>
+                        <div class="recommendation-box">
+                            Saran Jual (Untung <span id="txt-margin">40%</span>):
+                            <h2 id="res-harga-jual">Rp 0</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dash-card full-width" style="margin-top: 30px; border-left: 5px solid #009688;">
+                    <div class="card-header">
+                        <i class="fas fa-shopping-cart"></i> Perencana Belanja Bahan (Besok)
+                    </div>
+                    
+                    <div class="planner-grid">
+                        
+                        <div class="plan-col">
+                            <h4>🎯 Target Penjualan Besok (Cup)</h4>
+                            <div class="form-group">
+                                <label>Jeruk Series</label>
+                                <input type="number" id="plan-jeruk" placeholder="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Markisa Series</label>
+                                <input type="number" id="plan-markisa" placeholder="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Tea / Thai Tea / Choco</label>
+                                <input type="number" id="plan-tea" placeholder="0">
+                            </div>
+                        </div>
+
+                        <div class="plan-col">
+                            <h4>🌟 Estimasi Menu Spesial</h4>
+                            <p style="font-size:11px; color:#666; margin-bottom:10px;">Dari target di samping, kira-kira berapa yang pakai bahan ini?</p>
+                            
+                            <div class="form-group">
+                                <label>Varian Yakult</label>
+                                <input type="number" id="plan-yakult" placeholder="Cth: 20 cup">
+                            </div>
+                            <div class="form-group">
+                                <label>Varian Squash (Soda)</label>
+                                <input type="number" id="plan-soda" placeholder="Cth: 10 cup">
+                            </div>
+                            <div class="form-group">
+                                <label>Varian Susu (Milk/Thai)</label>
+                                <input type="number" id="plan-susu" placeholder="Cth: 30 cup">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <button onclick="hitungBelanjaMenu()" class="btn-calc" style="background-color: #009688; margin-top:15px;">
+                        Buat Daftar Belanja
+                    </button>
+
+                    <div id="hasil-belanja-smart" class="shopping-list-smart" style="display:none;">
+                        <h3>📝 Daftar Belanja Anda:</h3>
+                        
+                        <div class="list-category">
+                            <h5>🍊 Bahan Baku Utama</h5>
+                            <ul id="list-main"></ul>
+                        </div>
+                        
+                        <div class="list-category">
+                            <h5>🥤 Campuran & Toping</h5>
+                            <ul id="list-addon"></ul>
+                        </div>
+
+                        <div class="list-category">
+                            <h5>🍬 Bahan Pendukung (Universal)</h5>
+                            <ul id="list-general"></ul>
+                        </div>
+                        
+                        <div class="total-est-cup">
+                            Estimasi Total Penjualan: <strong id="total-plan-cup">0</strong> Cup
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dash-card full-width" style="margin-top: 30px; border-left: 5px solid #795548;">
+                    <div class="card-header">
+                        <i class="fas fa-handshake"></i> Terima Buah Petani (Harga Beli)
+                        <p style="margin: 5px 0 0 0; font-size: 12px; color: #666; font-weight: normal;">
+                            Tentukan harga beli Anda hari ini agar petani tertarik jual ke sini.
+                        </p>
+                    </div>
+
+                    <div class="supplier-control-grid">
+                        <div class="sup-col">
+                            <h4>🍊 Jeruk Peras</h4>
+                            <div class="form-group">
+                                <label>Harga Terima /Kg</label>
+                                <input type="number" id="beli-jeruk" placeholder="Cth: 10000">
+                            </div>
+                            <label class="switch-box">
+                                <input type="checkbox" id="status-terima-jeruk" checked>
+                                <span class="slider-round"></span>
+                                <span class="label-text">Sedang Menerima</span>
+                            </label>
+                        </div>
+
+                        <div class="sup-col">
+                            <h4>🟣 Markisa Matang</h4>
+                            <div class="form-group">
+                                <label>Harga Terima /Kg</label>
+                                <input type="number" id="beli-markisa" placeholder="Cth: 15000">
+                            </div>
+                            <label class="switch-box">
+                                <input type="checkbox" id="status-terima-markisa" checked>
+                                <span class="slider-round"></span>
+                                <span class="label-text">Sedang Menerima</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button onclick="updateHargaBeli()" class="btn-save" style="background: #795548; margin-top: 15px;">
+                        Update Info di Website
+                    </button>
+
+                    <a href="TentangKami.html" class="back-link">← Periksa Status</a>
+                </div>
+
+                <div class="dash-card full-width" style="margin-top: 30px; border-left: 5px solid #0f9d58;">
+                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        
+                        <div style="font-size: 16px;">
+                            <i class="fas fa-comments"></i> Kotak Masuk: Suara Pelanggan
+                        </div>
+
+                        <a href="https://docs.google.com/spreadsheets/d/1VhlPsgWSaj9P-DEeyNmhCO4ydm4ODvdapnETgSoMrvg/edit?usp=sharing" target="_blank" class="btn-small green" style="font-size: 11px; padding: 5px 10px;">
+                            <i class="fas fa-external-link-alt"></i> Buka Full
+                        </a>
+                    </div>
+
+                    <div class="spreadsheet-wrapper compact-sheet">
+                        <iframe 
+                            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSNtcQrLCic4mDpkBxaaW5NG49r-qvMr-_kwzWZsb8Vn9uuvPiO-BTJEXURhGSkVC5hC_oEdglLA6sB/pubhtml?gid=1250747550&amp;single=true&amp;widget=true&amp;headers=false" 
+                            width="100%" 
+                            height="350">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p style="color: white;">&copy; 2025 Es Jeruk & Es Markisa Pak Nasir. Dibuat oleh Kelompok Tiga Aksara </p>
+                <p style="color: white;">Universitas Teknokrat Indonesia prodi Teknologi INformasi.</p>
+            </div>
+        </div>
+
+        <script>
+            // --- 1. KONFIGURASI ---
+            const PIN_RAHASIA = "1234"; 
+            
+            // Default Target (Jika belum diset user, pakai 5 juta)
+            let targetBulanan = parseInt(localStorage.getItem('mitra_target_value')) || 5000000;
+
+            // --- 2. LOGIKA LOGIN & INITIALIZE ---
+            function cekLogin() {
+                const input = document.getElementById('pin-input').value;
+                const error = document.getElementById('error-msg');
+                
+                if(input === PIN_RAHASIA) {
+                    document.getElementById('login-overlay').style.display = 'none';
+                    document.getElementById('dashboard-area').style.display = 'block';
+                    muatData(); 
+                    updateTanggal();
+                    tampilkanAngkaTarget(); // Tampilkan target saat login
+                    renderStokMenu();
+                    renderGrafik();
+                } else {
+                    error.innerText = "PIN Salah!";
+                    document.getElementById('pin-input').value = "";
+                }
+            }
+
+            function logout() { location.reload(); }
+
+            function updateTanggal() {
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                document.getElementById('tanggal-hari-ini').innerText = new Date().toLocaleDateString('id-ID', options);
+            }
+
+            // --- 3. FITUR TARGET (NEW) ---
+            function tampilkanAngkaTarget() {
+                document.getElementById('angka-target-text').innerText = `Rp ${targetBulanan.toLocaleString('id-ID')}`;
+            }
+
+            function ubahTarget() {
+                // Minta input dari user (Prompt Sederhana)
+                let inputBaru = prompt("Masukkan Target Omset Baru (Hanya Angka):", targetBulanan);
+                
+                if (inputBaru && !isNaN(inputBaru)) {
+                    targetBulanan = parseInt(inputBaru);
+                    // Simpan ke HP (LocalStorage)
+                    localStorage.setItem('mitra_target_value', targetBulanan);
+                    
+                    // Refresh Tampilan
+                    tampilkanAngkaTarget();
+                    muatData(); // Hitung ulang progress bar
+                    alert("Target berhasil diubah!");
+                }
+            }
+
+            // --- 4. MANAJEMEN DATA ---
+            function ambilDataStorage() {
+                const data = localStorage.getItem('mitra_transaksi');
+                return data ? JSON.parse(data) : [];
+            }
+
+            function simpanKeStorage(data) {
+                localStorage.setItem('mitra_transaksi', JSON.stringify(data));
+                muatData();
+            }
+
+            // --- 5. FUNGSI TRANSAKSI ---
+            function simpanTransaksi() {
+                const jenis = document.getElementById('jenis-transaksi').value;
+                const ket = document.getElementById('ket-transaksi').value || "-";
+                const nominal = parseInt(document.getElementById('nominal-transaksi').value);
+
+                if (!nominal || nominal <= 0) { alert("Nominal salah!"); return; }
+
+                const transaksiBaru = {
+                    id: Date.now(),
+                    tanggal: new Date().toLocaleDateString('id-ID'),
+                    jam: new Date().toLocaleTimeString('id-ID'),
+                    jenis: jenis, ket: ket, nominal: nominal
+                };
+
+                const dataLama = ambilDataStorage();
+                dataLama.unshift(transaksiBaru);
+                simpanKeStorage(dataLama);
+
+                document.getElementById('nominal-transaksi').value = "";
+                document.getElementById('ket-transaksi').value = "";
+            }
+
+            // --- UPDATE FUNGSI: MUAT DATA ---
+            function muatData() {
+                const data = ambilDataStorage();
+                const tabelBody = document.getElementById('tabel-body');
+                const emptyMsg = document.getElementById('empty-msg');
+                
+                let html = "";
+                let totalBulan = 0;
+                let totalHari = 0;
+                const tglHariIni = new Date().toLocaleDateString('id-ID');
+
+                data.forEach(item => {
+                    // Hitung Total (Sama seperti sebelumnya)
+                    totalBulan += item.nominal;
+                    if(item.tanggal === tglHariIni) totalHari += item.nominal;
+                    
+                    // Render Tabel (Limit 10 data terakhir)
+                    // KITA TAMBAHKAN TOMBOL HAPUS DI KOLOM TERAKHIR (TD)
+                    if (data.indexOf(item) < 10) {
+                        html += `
+                            <tr>
+                                <td>${item.tanggal}<br><small>${item.jam}</small></td>
+                                <td><span class="badge ${item.jenis === 'Borongan' ? 'bg-purple' : 'bg-blue'}">${item.jenis}</span></td>
+                                <td>${item.ket}</td>
+                                <td style="font-weight:bold;">Rp ${item.nominal.toLocaleString('id-ID')}</td>
+                                
+                                <td style="text-align: center;">
+                                    <button onclick="hapusSatuTransaksi(${item.id})" class="btn-trash" title="Hapus baris ini">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                    }
+                });
+
+                // Update Total Omset UI (Sama seperti sebelumnya)
+                document.getElementById('omset-harian').innerText = `Rp ${totalHari.toLocaleString('id-ID')}`;
+                document.getElementById('omset-bulanan').innerText = `Rp ${totalBulan.toLocaleString('id-ID')}`;
+
+                // ... (Kode Logika Progress Bar Target biarkan tetap sama) ...
+                // (Copy-paste logika progress bar kamu yang sebelumnya di sini)
+                let persen = (totalBulan / targetBulanan) * 100;
+                if(persen > 100) persen = 100;
+                document.getElementById('progress-fill').style.width = `${persen}%`;
+                
+                // ... (Logika Sisa Target biarkan tetap sama) ...
+                const infoTarget = document.getElementById('info-sisa-target');
+                const barFill = document.getElementById('progress-fill');
+                if (totalBulan >= targetBulanan) {
+                    infoTarget.innerHTML = `🔥 <strong>LUAR BIASA!</strong> Target Rp ${targetBulanan.toLocaleString('id-ID')} sudah tercapai!`;
+                    barFill.style.backgroundColor = "#4caf50";
+                } else {
+                    let sisa = targetBulanan - totalBulan;
+                    infoTarget.innerHTML = `Kurang <strong>Rp ${sisa.toLocaleString('id-ID')}</strong> lagi.`;
+                    barFill.style.backgroundColor = "#ff9800";
+                }
+
+                // Tampilkan Tabel
+                if (data.length > 0) {
+                    tabelBody.innerHTML = html;
+                    emptyMsg.style.display = 'none';
+                } else {
+                    tabelBody.innerHTML = "";
+                    emptyMsg.style.display = 'block';
+                }
+
+                renderGrafik();
+            }
+
+            // --- FUNGSI BARU: HAPUS SATU DATA ---
+            function hapusSatuTransaksi(idTarget) {
+                // Konfirmasi agar tidak kepencet
+                if(confirm("Yakin ingin menghapus data transaksi ini? (Tidak bisa dikembalikan)")) {
+                    
+                    // 1. Ambil semua data
+                    let data = ambilDataStorage();
+                    
+                    // 2. Filter: Ambil SEMUA data KECUALI yang ID-nya sama dengan target
+                    // (Otomatis membuang data yang mau dihapus)
+                    data = data.filter(item => item.id !== idTarget);
+                    
+                    // 3. Simpan kembali data yang sudah bersih
+                    simpanKeStorage(data);
+                    
+                    // 4. muatData() otomatis dipanggil di dalam simpanKeStorage, jadi tabel langsung update
+                }
+            }
+
+            // --- 6. ASISTEN OPERASIONAL (HPP & STOK) ---
+
+            // --- KALKULATOR HPP MODULAR (NEW) ---
+
+            // Load Config saat login (Simpan harga-harga default biar gak capek ngetik)
+            function loadConfigHPP() {
+                const config = JSON.parse(localStorage.getItem('mitra_hpp_config_v2') || "{}");
+                
+                // Load Base
+                if(config.gula) document.getElementById('hpp-harga-gula').value = config.gula;
+                if(config.pack) document.getElementById('hpp-packaging').value = config.pack;
+                if(config.ops) document.getElementById('hpp-ops').value = config.ops;
+                
+                // Load Add-ons Costs
+                if(config.yakult) document.getElementById('cost-yakult').value = config.yakult;
+                if(config.soda) document.getElementById('cost-soda').value = config.soda;
+                if(config.susu) document.getElementById('cost-susu').value = config.susu;
+                if(config.dugan) document.getElementById('cost-dugan').value = config.dugan;
+                if(config.buah) document.getElementById('cost-buah-potong').value = config.buah;
+                if(config.garnish) document.getElementById('cost-garnish').value = config.garnish;
+            }
+            
+            // Jangan lupa panggil loadConfigHPP() di dalam fungsi cekLogin()
+
+            function updateMarginLabel(val) {
+                document.getElementById('margin-display').innerText = val + "%";
+                document.getElementById('txt-margin').innerText = val + "%";
+            }
+
+            function hitungHPPModular() {
+                // 1. HITUNG BASIS (Sama seperti sebelumnya)
+                const hargaBahan = parseInt(document.getElementById('hpp-harga-bahan').value) || 0;
+                const yieldBahan = parseFloat(document.getElementById('hpp-yield').value) || 4;
+                const hargaGula = parseInt(document.getElementById('hpp-harga-gula').value) || 0;
+                const gramGula = parseInt(document.getElementById('hpp-gram-gula').value) || 0;
+                const pack = parseInt(document.getElementById('hpp-packaging').value) || 0;
+                const ops = parseInt(document.getElementById('hpp-ops').value) || 0;
+                const margin = parseInt(document.getElementById('hpp-margin').value) || 40;
+
+                if(hargaBahan === 0) { alert("Isi harga bahan utama dulu!"); return; }
+
+                const modalBahan = hargaBahan / yieldBahan;
+                const modalGula = (hargaGula / 1000) * gramGula;
+                const baseCost = modalBahan + modalGula + pack + ops;
+
+                // 2. HITUNG ADD-ONS (Campuran)
+                let addonCost = 0;
+
+                // Cek Yakult
+                if(document.getElementById('chk-yakult').checked) {
+                    addonCost += parseInt(document.getElementById('cost-yakult').value) || 0;
+                }
+                // Cek Soda
+                if(document.getElementById('chk-soda').checked) {
+                    addonCost += parseInt(document.getElementById('cost-soda').value) || 0;
+                }
+                // Cek Susu
+                if(document.getElementById('chk-susu').checked) {
+                    addonCost += parseInt(document.getElementById('cost-susu').value) || 0;
+                }
+                // Cek Dugan
+                if(document.getElementById('chk-dugan').checked) {
+                    addonCost += parseInt(document.getElementById('cost-dugan').value) || 0;
+                }
+                // Cek Buah Potong (Lemon/Leci)
+                if(document.getElementById('chk-buah-potong').checked) {
+                    addonCost += parseInt(document.getElementById('cost-buah-potong').value) || 0;
+                }
+                // Cek Garnish (Mint/Selasi/Cincau)
+                if(document.getElementById('chk-garnish').checked) {
+                    addonCost += parseInt(document.getElementById('cost-garnish').value) || 0;
+                }
+
+                // 3. TOTAL & HASIL
+                const totalHPP = baseCost + addonCost;
+                const profit = totalHPP * (margin / 100);
+                const hargaJual = totalHPP + profit;
+
+                document.getElementById('res-base').innerText = "Rp " + Math.round(baseCost).toLocaleString('id-ID');
+                document.getElementById('res-addon').innerText = "+ Rp " + Math.round(addonCost).toLocaleString('id-ID');
+                document.getElementById('res-hpp-total').innerText = "Rp " + Math.round(totalHPP).toLocaleString('id-ID');
+                document.getElementById('res-harga-jual').innerText = "Rp " + Math.ceil(hargaJual / 500) * 500;
+                
+                document.getElementById('hasil-hpp-pro').style.display = 'block';
+
+                // 4. AUTO SAVE CONFIG (Simpan harga default add-ons biar besok gak ngetik lagi)
+                const config = {
+                    gula: hargaGula, pack: pack, ops: ops,
+                    yakult: document.getElementById('cost-yakult').value,
+                    soda: document.getElementById('cost-soda').value,
+                    susu: document.getElementById('cost-susu').value,
+                    dugan: document.getElementById('cost-dugan').value,
+                    buah: document.getElementById('cost-buah-potong').value,
+                    garnish: document.getElementById('cost-garnish').value
+                };
+                localStorage.setItem('mitra_hpp_config_v2', JSON.stringify(config));
+            }
+
+            // --- FITUR: SMART SHOPPING PLANNER ---
+    
+            function hitungBelanjaMenu() {
+                // 1. AMBIL INPUT TARGET
+                const tJeruk = parseInt(document.getElementById('plan-jeruk').value) || 0;
+                const tMarkisa = parseInt(document.getElementById('plan-markisa').value) || 0;
+                const tTea = parseInt(document.getElementById('plan-tea').value) || 0;
+
+                const tYakult = parseInt(document.getElementById('plan-yakult').value) || 0;
+                const tSoda = parseInt(document.getElementById('plan-soda').value) || 0;
+                const tSusu = parseInt(document.getElementById('plan-susu').value) || 0;
+
+                const totalCup = tJeruk + tMarkisa + tTea;
+
+                if (totalCup === 0) {
+                    alert("Isi minimal salah satu target penjualan (Jeruk/Markisa/Tea).");
+                    return;
+                }
+
+                // 2. RUMUS KONVERSI (Bisa diubah sesuai takaran Pak Nasir)
+                // Yield Buah
+                const butuhJeruk = tJeruk / 4; // 1kg = 4 cup
+                const butuhMarkisa = tMarkisa / 5; // 1kg = 5 cup
+                const butuhTeh = Math.ceil(tTea / 30); // 1 pack teh celup besar = 30 cup
+
+                // Yield Add-ons
+                const butuhYakultPack = Math.ceil(tYakult / 5); // 1 pack isi 5
+                const butuhSodaBotol = Math.ceil(tSoda / 8); // 1 botol besar (1.5L) ~ 8-10 cup
+                const butuhSusuKaleng = Math.ceil(tSusu / 10); // 1 kaleng ~ 10-12 porsi
+
+                // Yield Universal (Gula & Cup)
+                // Asumsi rata-rata gula 40gr per cup
+                const butuhGula = (totalCup * 40) / 1000; 
+                const butuhEsBatu = Math.ceil(totalCup / 50); // 1 Bal Es Kristal ~ 50 cup (Estimasi)
+
+                // 3. GENERATE HTML LIST
+                
+                // A. List Utama
+                let htmlMain = "";
+                if(tJeruk > 0) htmlMain += `<li>🍊 <strong>${butuhJeruk.toFixed(1)} Kg</strong> Jeruk</li>`;
+                if(tMarkisa > 0) htmlMain += `<li>🟣 <strong>${butuhMarkisa.toFixed(1)} Kg</strong> Markisa</li>`;
+                if(tTea > 0) htmlMain += `<li>🍂 <strong>${butuhTeh} Pack</strong> Teh/Bubuk Coklat</li>`;
+                if(htmlMain === "") htmlMain = "<li>- Tidak ada target -</li>";
+
+                // B. List Add-ons
+                let htmlAddon = "";
+                if(tYakult > 0) htmlAddon += `<li>🍼 <strong>${butuhYakultPack} Pack</strong> Yakult (@5pcs)</li>`;
+                if(tSoda > 0) htmlAddon += `<li>🥤 <strong>${butuhSodaBotol} Botol Besar</strong> Sprite/Soda</li>`;
+                if(tSusu > 0) htmlAddon += `<li>🥛 <strong>${butuhSusuKaleng} Kaleng</strong> Susu Kental Manis/Evaporasi</li>`;
+                if(htmlAddon === "") htmlAddon = "<li>- Tidak perlu belanja tambahan -</li>";
+
+                // C. List Universal
+                let htmlGen = "";
+                htmlGen += `<li>🍬 <strong>${butuhGula.toFixed(1)} Kg</strong> Gula Pasir</li>`;
+                htmlGen += `<li>🧊 <strong>${butuhEsBatu} Bal</strong> Es Kristal (Estimasi)</li>`;
+                htmlGen += `<li>🥤 <strong>${totalCup} Pcs</strong> Cup + Sedotan + Plastik</li>`;
+
+                // 4. RENDER KE LAYAR
+                document.getElementById('list-main').innerHTML = htmlMain;
+                document.getElementById('list-addon').innerHTML = htmlAddon;
+                document.getElementById('list-general').innerHTML = htmlGen;
+                document.getElementById('total-plan-cup').innerText = totalCup;
+
+                document.getElementById('hasil-belanja-smart').style.display = 'block';
+            }
+
+            // --- 7. UTILS ---
+            function hapusRiwayat() {
+                if(confirm("Hapus semua data?")) {
+                    localStorage.removeItem('mitra_transaksi');
+                    muatData();
+                }
+            }
+            function downloadCSV() {
+                const data = ambilDataStorage();
+                if(data.length === 0) { alert("Data kosong, belum ada yang bisa diunduh!"); return; }
+
+                // --- PERBAIKAN FORMAT EXCEL ---
+                
+                // 1. Gunakan TITIK KOMA (;) sebagai pemisah kolom (Format standar Excel Indonesia)
+                let csvContent = "Tanggal;Jam;Jenis;Keterangan;Nominal\n";
+
+                data.forEach(row => {
+                    // 2. Kita bungkus data teks dengan tanda kutip ("") untuk keamanan
+                    // Data angka (nominal) biarkan polos agar bisa dijumlahkan di Excel
+                    csvContent += `"${row.tanggal}";"${row.jam}";"${row.jenis}";"${row.ket}";${row.nominal}\n`;
+                });
+
+                // 3. Tambahkan BOM (\ufeff) di awal file
+                // Ini adalah kode rahasia agar Excel tahu file ini pakai font UTF-8 (Supaya emoji/simbol tidak error)
+                const blob = new Blob(["\ufeff" + csvContent], { type: 'text/csv;charset=utf-8;' });
+                
+                // Buat link download virtual
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.setAttribute("href", url);
+                link.setAttribute("download", "Laporan_Omset_Pak_Nasir.csv");
+                
+                // Klik otomatis
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
+            // --- 1. MANAJEMEN OPERASIONAL (BERANDA) ---
+            function initOps() {
+                const status = localStorage.getItem('mitra_ops_status') || 'auto';
+                // Centang radio button yang sesuai
+                const radios = document.getElementsByName('ops_status');
+                radios.forEach(r => {
+                    if(r.value === status) r.checked = true;
+                });
+            }
+
+            function simpanOps(val) {
+                localStorage.setItem('mitra_ops_status', val);
+                // Tidak perlu alert biar cepat
+            }
+
+            // --- 2. MANAJEMEN STOK MENU (HALAMAN MENU) ---
+            
+            // DAFTAR MENU HARUS SAMA PERSIS DENGAN DI MENU.HTML (Nama H3)
+            const daftarMenuMaster = [
+                "Markisa Original", "Markisa Tea", "Markisa Selasi", "Markisa Mojito", "Markisa Yakult", "Markisa Squash", "Markisa Jeruk", "Markisa Lemon", "Markisa Dugan", "Markisa Mint",
+                "Jeruk Original", "Jeruk Mojito", "Jeruk Squash", "Jeruk Dugan", "Jeruk Sprite Refresher", "Jeruk Nipis Squash", "Jeruk Susu", "Jeruk Yakult",
+                "Tea Original", "Lemon Tea", "Lychee Tea", "Milk Tea", "Mint Tea", "Milk Tea Cincau", "Thai Tea Original", "Thai Tea Green Tea", "Dark Chocolate",
+            ];
+
+            function renderStokMenu() {
+                const container = document.getElementById('list-stok-menu');
+                const stokData = JSON.parse(localStorage.getItem('mitra_stok_menu') || "{}");
+                
+                let html = "";
+                
+                daftarMenuMaster.forEach(menu => {
+                    // Cek status (Default true/ada jika tidak ditemukan di storage)
+                    const isReady = stokData[menu] !== false; 
+                    
+                    html += `
+                        <div class="stock-item ${isReady ? '' : 'inactive'}">
+                            <span style="font-size:13px; font-weight:bold;">${menu}</span>
+                            <label class="switch">
+                                <input type="checkbox" onchange="toggleMenu('${menu}', this)" ${isReady ? 'checked' : ''}>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    `;
+                });
+                
+                container.innerHTML = html;
+            }
+
+            function toggleMenu(namaMenu, checkbox) {
+                const stokData = JSON.parse(localStorage.getItem('mitra_stok_menu') || "{}");
+                stokData[namaMenu] = checkbox.checked; // True = Ada, False = Habis
+                localStorage.setItem('mitra_stok_menu', JSON.stringify(stokData));
+                
+                renderStokMenu(); // Re-render untuk update warna background merah/putih
+            }
+
+            // --- BULK ACTIONS (FITUR CEPAT) ---
+            function setSeries(keyword, status) {
+                const stokData = JSON.parse(localStorage.getItem('mitra_stok_menu') || "{}");
+                
+                daftarMenuMaster.forEach(menu => {
+                    // Jika nama menu mengandung kata kunci (misal "Jeruk")
+                    if (menu.includes(keyword)) {
+                        stokData[menu] = status;
+                    }
+                });
+                
+                localStorage.setItem('mitra_stok_menu', JSON.stringify(stokData));
+                renderStokMenu();
+                alert(`Semua stok ${keyword} berhasil diatur ke: ${status ? 'READY' : 'HABIS'}`);
+            }
+
+            // --- FUNGSI BARU: HABISKAN TEA & CHOCO ---
+            function habiskanTeaChoco(status) {
+                const stokData = JSON.parse(localStorage.getItem('mitra_stok_menu') || "{}");
+                
+                // Kita pakai array kata kunci
+                // Menu apapun yang mengandung kata "Tea", "Thai", ATAU "Chocolate" akan kena
+                const targetKeywords = ["Tea", "Thai", "Chocolate"];
+
+                daftarMenuMaster.forEach(menu => {
+                    // Cek: Apakah nama menu mengandung SALAH SATU kata kunci?
+                    const isTarget = targetKeywords.some(keyword => menu.includes(keyword));
+
+                    if (isTarget) {
+                        stokData[menu] = status; // false = Habis
+                    }
+                });
+                
+                localStorage.setItem('mitra_stok_menu', JSON.stringify(stokData));
+                renderStokMenu();
+                alert("Semua Tea, Thai Tea, & Coklat berhasil di-set HABIS!");
+            }
+
+            function resetStokSemua() {
+                localStorage.removeItem('mitra_stok_menu');
+                renderStokMenu();
+                alert("Semua menu kembali READY!");
+            }
+
+            // INITIALIZE SAAT LOGIN
+            // Tambahkan initOps() dan renderStokMenu() ke dalam fungsi cekLogin()
+            // Contoh:
+            /*
+            if(input === PIN_RAHASIA) {
+                ...
+                initOps();
+                renderStokMenu();
+            }
+            */
+
+            // Hapus kata "Es " jika ada, agar cocok dengan database Mitra
+            let namaMenuDiLayar = titleEl.innerText.trim();
+            if (namaMenuDiLayar.startsWith("Es ")) {
+                namaMenuDiLayar = namaMenuDiLayar.substring(3); // Hapus 3 huruf pertama ("Es ")
+            }
+
+            // --- FITUR SUPPLIER (HARGA BELI) ---
+
+            function loadHargaBeli() {
+                const config = JSON.parse(localStorage.getItem('mitra_supplier_config') || "{}");
+                
+                if(config.hargaJeruk) document.getElementById('beli-jeruk').value = config.hargaJeruk;
+                if(config.hargaMarkisa) document.getElementById('beli-markisa').value = config.hargaMarkisa;
+                
+                // Cek status checkbox (Default true/terima jika belum diset)
+                document.getElementById('status-terima-jeruk').checked = config.statusJeruk !== false;
+                document.getElementById('status-terima-markisa').checked = config.statusMarkisa !== false;
+            }
+            // Panggil loadHargaBeli() di dalam cekLogin()!
+
+            function updateHargaBeli() {
+                const config = {
+                    hargaJeruk: document.getElementById('beli-jeruk').value,
+                    hargaMarkisa: document.getElementById('beli-markisa').value,
+                    statusJeruk: document.getElementById('status-terima-jeruk').checked,
+                    statusMarkisa: document.getElementById('status-terima-markisa').checked
+                };
+                
+                localStorage.setItem('mitra_supplier_config', JSON.stringify(config));
+                alert("Harga beli berhasil diupdate! Petani bisa melihatnya sekarang.");
+            }
+
+            // --- FITUR BARU: GRAFIK TREN 7 HARI ---
+
+            function renderGrafik() {
+                const container = document.getElementById('chart-container');
+                const dataMentah = ambilDataStorage(); // Ambil dari LocalStorage
+                
+                // 1. Siapkan 7 Hari Terakhir (Array Tanggal)
+                // Format tanggal di data kita: "dd/mm/yyyy" (String)
+                // Kita butuh objek Date javascript untuk hitung mundur
+                
+                const last7Days = [];
+                for (let i = 6; i >= 0; i--) {
+                    const d = new Date();
+                    d.setDate(d.getDate() - i);
+                    // Format ke ID-ID string: "1/1/2026" atau "01/01/2026" tergantung browser
+                    // Kita pakai toLocaleDateString('id-ID')
+                    last7Days.push(d); 
+                }
+
+                // 2. Hitung Total Omset per Hari
+                let maxOmset = 0;
+                const chartData = last7Days.map(dateObj => {
+                    // Format tanggal agar sama dengan data simpanan (misal: "7/1/2026")
+                    const dateStr = dateObj.toLocaleDateString('id-ID'); 
+                    
+                    // Filter data transaksi yang tanggalnya COCOK
+                    const omsetHariIni = dataMentah
+                        .filter(item => item.tanggal === dateStr)
+                        .reduce((total, item) => total + item.nominal, 0);
+
+                    if (omsetHariIni > maxOmset) maxOmset = omsetHariIni;
+
+                    return {
+                        dateLabel: dateObj.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }), // "7 Jan"
+                        dateFull: dateStr, // "7/1/2026" (untuk cek hari ini)
+                        value: omsetHariIni
+                    };
+                });
+
+                // 3. Render HTML Batang
+                let html = "";
+                const tglHariIni = new Date().toLocaleDateString('id-ID');
+
+                // Jika data kosong semua
+                if (maxOmset === 0) maxOmset = 1; // Mencegah pembagian nol
+
+                chartData.forEach(d => {
+                    // Hitung tinggi persentase (Relatif terhadap nilai tertinggi)
+                    // Biar grafik selalu penuh proporsional
+                    let percentHeight = (d.value / maxOmset) * 100;
+                    if (percentHeight === 0) percentHeight = 2; // Kasih 2% biar ada garis dikit
+
+                    // Cek kelas warna
+                    let barClass = "the-bar";
+                    if (d.value === maxOmset && d.value > 0) barClass += " highest"; // Tertinggi
+                    if (d.dateFull === tglHariIni) barClass += " today"; // Hari Ini
+
+                    html += `
+                        <div class="chart-bar-wrap">
+                            <div class="bar-tooltip">Rp ${d.value.toLocaleString('id-ID')}</div>
+                            <div class="${barClass}" style="height: ${percentHeight}%"></div>
+                            <div class="bar-date">${d.dateLabel}</div>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = html;
+            }
+
+            // PENTING: Panggil fungsi ini di:
+            // 1. cekLogin() -> Biar muncul pas login
+            // 2. simpanTransaksi() -> Biar grafik langsung naik pas input data baru
+            // 3. hapusSatuTransaksi() -> Biar grafik turun pas data dihapus
+        </script>
+    </body>
+</html>
