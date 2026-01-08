@@ -4,7 +4,7 @@ Platform website modern untuk digitalisasi UMKM lokal "Es Jeruk & Markisa Pak Na
 
 🔗 **Live Demo:** [Klik Disini untuk Melihat Website](https://nafiz-547.github.io/es-jeruk-es-markisa-pak-nasir)
 
-![Screenshot Project](https://via.placeholder.com/800x400?text=Masukkan+Screenshot+Web+Disini)
+![Screenshot Project](https://via.placeholder.com/800x400?text=Screenshot 2026-01-08 154213.png)
 *(Saran: Upload screenshot web kamu ke folder repo, lalu ganti link di atas dengan path gambar kamu)*
 
 ## 🚀 Fitur Unggulan
