@@ -4,8 +4,8 @@ Platform website modern untuk digitalisasi UMKM lokal "Es Jeruk & Markisa Pak Na
 
 🔗 **Live Demo:** [Klik Disini untuk Melihat Website](https://nafiz-547.github.io/es-jeruk-es-markisa-pak-nasir)
 
-![Screenshot Project](Screenshot 2026-01-08 154213.png)
-*(Saran: Upload screenshot web kamu ke folder repo, lalu ganti link di atas dengan path gambar kamu)*
+![Screenshot Project] 
+<img width="2835" height="1537" alt="Screenshot 2026-01-08 154213" src="https://github.com/user-attachments/assets/efa0b40b-e22b-40e8-b529-097c19957487" />
 
 ## 🚀 Fitur Unggulan
 
@@ -31,10 +31,12 @@ Dashboard khusus pemilik usaha yang diproteksi PIN Keamanan. Menggunakan **Local
 ## 📸 Dokumentasi Fitur
 
 **1. Dashboard Mitra (Stok & Grafik)**
-> (Pasang Screenshot Dashboard disini)
+> <img width="523" height="1446" alt="Screenshot 2026-01-08 160354" src="https://github.com/user-attachments/assets/e17ce220-5992-4139-aff9-c55b5ecd2f0c" />
 
-**2. Halaman Penawaran Supplier**
-> (Pasang Screenshot Halaman Supplier disini)
+
+**2. Halaman Menu**
+> <img width="2832" height="1534" alt="Screenshot 2026-01-08 160050" src="https://github.com/user-attachments/assets/400b630c-f9c7-40c4-9d40-47786e9b4c2a" />
+
 
 ---
-*Dibuat oleh Nafiz - Mahasiswa Teknologi Informasi, Universitas Teknokrat Indonesia.*
+*Dibuat oleh Nafiz - Mahasiswa Teknologi Informasi 2024.*
